@@ -2,6 +2,8 @@
 
 set -e
 
+IP=`ifconfig | grep -C 1 eth0 | grep inet | sed -r 's/.*addr:(.+)Bcast.*/\1/g'`
+
 # Need to initialize?
 if [ ! -e /.initialized ]; then
     if [ -z $AFP_LOGIN ]; then
@@ -28,6 +30,7 @@ if [ ! -e /.initialized ]; then
 	log file = /var/log/afpd.log
 	log level = default:warn
 	zeroconf = no
+    afp listen = ${IP}
 
 [${AFP_NAME}]
 	path = /timemachine
