@@ -30,7 +30,7 @@ if [ ! -e /.initialized ]; then
 	log file = /var/log/afpd.log
 	log level = default:warn
 	zeroconf = no
-    afp listen = ${IP}
+    afp listen = <IP>
 
 [${AFP_NAME}]
 	path = /timemachine
@@ -44,6 +44,9 @@ if [ ! -e /.initialized ]; then
 
     touch /.initialized
 fi
+
+# Update the IP
+sed -i.bak "s/<IP>/$IP/g" /usr/local/etc/afp.conf
 
 # Initiate the timemachine daemons
 chown -R $AFP_LOGIN:$AFP_LOGIN /timemachine
